@@ -1,0 +1,14 @@
+import tkinter as tk #Importa a biblioteca
+'''Estrutura para criar o projeto'''
+root = tk.Tk() #Cria a janela principal (root)
+root.title("Olá pessoal") #Chama a janela e adiciona atributos
+root.geometry("600x200")
+'''Estrutura de primeiro frame'''
+frame_superior = tk.Frame(root, width=600, height=100, bg="lightgreen")
+frame_superior.place(relx=0, rely=0)
+'''Label de titulo'''
+label_titulo = tk.Label(frame_superior, text="Bem vindo", font=("roboto", 24), bg="lightgreen", fg="green")
+label_titulo.place(relx=0.5, rely=0.5, anchor="center")
+'''Inicia o sistema'''
+root.mainloop() #Mantém a janela aberta
+#Documentação "geeks for geeks tkinter"
