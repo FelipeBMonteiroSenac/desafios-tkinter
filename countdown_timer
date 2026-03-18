@@ -1,0 +1,101 @@
+"""Countdown timer simples usando Tkinter.
+
+Este script cria uma janela com um contador regressivo (60 segundos) e botões
+para iniciar ou resetar o temporizador. O código foi comentado para facilitar
+o aprendizado e o entendimento do fluxo.
+"""
+
+import tkinter as tk
+import time
+
+# Valor inicial do timer em segundos.
+timer = 60
+
+
+def start_timer():
+    """Inicia o contador regressivo.
+
+    A cada segundo:
+    1) espera 1s (time.sleep)
+    2) diminui o valor do timer
+    3) atualiza o rótulo na interface
+    4) agenda a próxima chamada com root.after
+
+    Nota: usar time.sleep bloqueia a thread da interface. Em aplicações
+    mais complexas, considere apenas usar root.after para manter a GUI
+    responsiva.
+    """
+
+    global timer
+
+    # Só atualiza enquanto houver tempo restante.
+    if timer > 0:
+        # Pausa a execução por 1 segundo.
+        time.sleep(1)
+
+        # Decrementa o valor do timer e atualiza a label.
+        timer -= 1
+        label_timer.config(text=f"{timer} seg")
+
+        # Agenda essa mesma função para rodar novamente após 1 segundo.
+        root.after(1000, start_timer)
+
+
+# Reseta o timer
+
+
+def reset_timer():
+    """Restaura o timer ao valor inicial (60 segundos) e atualiza a interface."""
+
+    global timer
+
+    # Valor padrão do timer.
+    timer = 60
+
+    # Atualiza o texto mostrado na janela.
+    label_timer.config(text=f"{timer} seg")
+
+
+# Cria a janela principal
+
+root = tk.Tk()
+root.geometry("600x200")
+root.title("Countdown Timer")
+
+# Cria o frame superior
+frame_superior = tk.Frame(root, bg="lightyellow")
+frame_superior.place(relheight=0.55, relwidth=0.9, relx=0.5, rely=0.1, anchor="n")
+label_timer = tk.Label(
+    frame_superior,
+    text=f"{timer} seg",
+    font=("Helvetica", 48),
+    bg="lightyellow",
+    fg="green",
+)
+label_timer.place(relx=0.5, rely=0.5, anchor="center")
+
+# Cria o frame inferior
+frame_inferior = tk.Frame(root, bg="lightyellow")
+frame_inferior.place(relheight=0.25, relwidth=0.9, relx=0.5, rely=0.7, anchor="n")
+button_start = tk.Button(
+    frame_inferior,
+    text="Start",
+    font=("Helvetica", 14),
+    bg="green",
+    fg="white",
+    command=start_timer,
+)
+button_start.place(relheight=0.8, relwidth=0.3, relx=0.3, rely=0.5, anchor="center")
+button_reset = tk.Button(
+    frame_inferior,
+    text="Reset",
+    font=("Helvetica", 14),
+    bg="red",
+    fg="white",
+    command=reset_timer,
+)
+button_reset.place(relheight=0.8, relwidth=0.3, relx=0.7, rely=0.5, anchor="center")
+
+
+# Inicia o loop principal do Tkinter.
+root.mainloop()
